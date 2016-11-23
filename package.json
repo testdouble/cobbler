@@ -17,6 +17,7 @@
     "jade": "~1.11.0",
     "minimist": "~1.2.0",
     "nightmare": "~2.8.1",
+    "resume-schema": "0.0.16",
     "temp": "~0.8.3"
   }
 }
