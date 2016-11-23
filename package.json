@@ -1,0 +1,22 @@
+{
+  "name": "dossier",
+  "version": "0.1.0",
+  "description": "A tool to generate résumés for Test Double agents.",
+  "main": "lib/dossier.js",
+  "bin": {
+    "dossier": "bin/dossier"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Michael Schoonmaker <michael.r.schoonmaker@gmail.com> (https://www.schoonology.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "debug": "~2.3.3",
+    "jade": "~1.11.0",
+    "minimist": "~1.2.0",
+    "nightmare": "~2.8.1",
+    "temp": "~0.8.3"
+  }
+}

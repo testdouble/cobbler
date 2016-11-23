@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+var dossier = require('../lib/dossier')
+var debug = require('debug')('dossier')
+var fs = require('fs')
+var minimist = require('minimist')
+var path = require('path')
+var temp = require('temp')
+var argv = minimist(process.argv.slice(2), {
+  string: ['input', 'output'],
+  alias: {
+    input: ['i'],
+    output: ['o'],
+  },
+})
+var tempfile = temp.path({
+  suffix: '.html'
+})
+
+// Let's generate some nice error messages for trivially invalid arguments.
+if (argv._.length) {
+  error('Positional arguments not supported.')
+}
+
+if (!argv.input) {
+  error('Missing argument for input JSON file.')
+}
+
+if (!argv.output) {
+  error('Missing argument for output PDF file.')
+}
+
+// No errors with our arguments? Let's proceed.
+if (process.exitCode) {
+  usage()
+} else {
+  debug('Using intermediary HTML file: %s', tempfile)
+
+  dossier.load(path.resolve(process.cwd(), argv.input))
+    .then(data => dossier.render(
+      path.resolve(__dirname, '../assets/template.html'),
+      data,
+      tempfile
+    ))
+    .then(_ => dossier.pdf(
+      tempfile,
+      path.resolve(process.cwd(), argv.output)
+    ))
+    .catch(error)
+}
+
+// Logs `err` to STDERR
+function error(err) {
+  process.stderr.write('Error: ')
+  process.stderr.write(err.stack || err.message || err)
+  process.stderr.write('\n')
+  process.exitCode = 1
+}
+
+function usage() {
+  fs.createReadStream(path.resolve(__dirname, 'usage'))
+    .pipe(process.stderr)
+}
