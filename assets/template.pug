@@ -1,4 +1,19 @@
-mixin gig(details)
+mixin duration(start, end)
+  - var mStart = moment(start)
+  - var mEnd = moment(end)
+  - var mDuration = moment.duration(mEnd.diff(mStart))
+
+  if mDuration.asYears() >= 2
+    if mDuration.months() < 2 || mDuration.months() > 10
+      | #{mDuration.years()} years
+    else
+      | #{mDuration.years()} years, #{mDuration.months()} months
+  else if Math.round(mDuration.asMonths()) > 1
+    | #{Math.round(mDuration.asMonths())} months
+  else
+    | #{mDuration.humanize()}
+
+mixin gig(details, short)
   .company= details.company
   if details.position
     .position= details.position
@@ -7,12 +22,15 @@ mixin gig(details)
       .position= position
   if details.startDate
     .time
-      =details.startDate.split('-')[0]
-      | &hairsp;&ndash;&hairsp;
-      if details.endDate
-        =details.endDate.split('-')[0]
+      if short
+        +duration(details.startDate, details.endDate)
       else
-        | Present
+        =details.startDate.split('-')[0]
+        | &hairsp;&ndash;&hairsp;
+        if details.endDate
+          =details.endDate.split('-')[0]
+        else
+          | Present
   if details.summary
     p= details.summary
   if details.highlights
@@ -50,7 +68,7 @@ body
 
             each project in job.projects
               section.project
-                +gig(project)
+                +gig(project, true)
 
   section.category
     - var projects = work.filter(job => {
