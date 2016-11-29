@@ -37,7 +37,7 @@ if (process.exitCode) {
 
   dossier.load(path.resolve(process.cwd(), argv.input))
     .then(data => dossier.render(
-      path.resolve(__dirname, '../assets/template.html'),
+      path.resolve(__dirname, '../assets/template.pug'),
       data,
       tempfile
     ))
