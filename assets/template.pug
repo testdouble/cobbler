@@ -4,20 +4,68 @@ head
   style
     include:sass /style.sass
 body
-  header.logo
+  .logo
     include /td-logo.svg
-  section
-    header
-      h1.name= basics.name
-      small.email= basics.email
 
-    section.category
-      - var employment = work.filter(job => {
-      -   return (job.keywords || []).indexOf('personal') === -1
-      - })
-      h2 Employment History
-      each job in employment
-        section.work
+  header.category
+    h1.name= basics.name
+    .email= basics.email
+
+  section.category
+    - var employment = work.filter(job => {
+    -   return (job.keywords || []).indexOf('personal') === -1
+    - })
+    h2 Employment History
+    each job in employment
+      section.work
+        .company= job.company
+        .position= job.position
+        .time
+          =job.startDate.split('-')[0]
+          | &hairsp;&ndash;&hairsp;
+          if job.endDate
+            =job.endDate.split('-')[0]
+          else
+            | Present
+        if job.summary
+          p= job.summary
+        if job.highlights
+          ul.highlights
+            each item in job.highlights
+              li= item
+        if job.projects
+          section.projects
+            h3 Featured Projects &amp; Roles
+            each project in job.projects
+              section.project
+                if project.position
+                  .company= project.company
+                  .position= project.position
+                  .time
+                    =project.startDate.split('-')[0]
+                    | &hairsp;&ndash;&hairsp;
+                    if project.endDate
+                      =project.endDate.split('-')[0]
+                    else
+                      | Present
+                  if project.summary
+                    p= project.summary
+                  if project.highlights
+                    ul.highlights
+                      each item in project.highlights
+                        li= item
+                else
+                  .company= project.company
+                  p= project.summary
+
+  section.category
+    - var projects = work.filter(job => {
+    -   return (job.keywords || []).indexOf('personal') !== -1
+    - })
+    h2 Personal Projects
+    each job in projects
+      section.project
+        if job.position
           .company= job.company
           .position= job.position
           .time
@@ -27,49 +75,29 @@ body
               =job.endDate.split('-')[0]
             else
               | Present
-          if job.summary
-            p= job.summary
-          if job.highlights
-            ul.highlights
-              each item in job.highlights
-                li= item
+          p= job.summary
+        else
+          .company= job.company
+          p= job.summary
 
-    section.category
-      - var projects = work.filter(job => {
-      -   return (job.keywords || []).indexOf('personal') !== -1
-      - })
-      h2 Personal Projects
-      each job in projects
-        section.work
-          if job.position
-            .company= job.company
-            .position= job.position
-            .time
-              =job.startDate.split('-')[0]
-              | &hairsp;&ndash;&hairsp;
-              if job.endDate
-                =job.endDate.split('-')[0]
-              else
-                | Present
-            p= job.summary
-          else
-            .project= job.company
-            p.no-margin= job.summary
+  section.category
+    - var skillsObj = skills.reduce((obj, skill) => {
+    -   obj[skill.level] = (obj[skill.level] || []).concat(skill.name);
+    -   return obj
+    - }, {})
+    h2 Skills
+    table
+      each skill, level in skillsObj
+        tr.skill-level
+          th= level
+          td= skill.join(', ')
 
-    section.category
-      - var skillsObj = skills.reduce((obj, skill) => {
-      -   obj[skill.level] = (obj[skill.level] || []).concat(skill.name);
-      -   return obj
-      - }, {})
-      h2 Skills
-      table
-        each skill, level in skillsObj
-          tr.skill-level
-            th= level
-            td= skill.join(', ')
-
-    section.category
-      h2 Education
-      each level in education
-        p.
-          #{level.studyType} in #{level.area}, #{level.institution} #{level.startDate.split('-')[0]}&hairsp;&ndash;&hairsp;#{level.endDate.split('-')[0]}
+  section.category
+    h2 Education
+    each level in education
+      p.degree
+        span.field #{level.studyType} in #{level.area},
+        | &nbsp;
+        span.school #{level.institution}
+        | &nbsp;
+        span.time #{level.startDate.split('-')[0]}&hairsp;&ndash;&hairsp;#{level.endDate.split('-')[0]}
