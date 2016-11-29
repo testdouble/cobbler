@@ -1,0 +1,77 @@
+$td-green: #6EFF00
+$black: #000000
+$grey50: #888888
+$white: #FFFFFF
+
+*
+  line-height: 1.5em
+
+html
+  padding: 0
+
+body
+  // background: linear-gradient(to bottom, $td-green 0, $td-green 1in, $white 1in)
+  // background-size: 6.5in 9in
+  // background-repeat: repeat-y
+  font-family: 'Source Sans Pro'
+  margin: 2in 0 0 0
+
+@page
+  margin: 1in
+  size: portrait
+
+.email
+  font-weight: 700
+
+svg
+  width: 100%
+  height: 100%
+
+.logo
+  height: 3pc
+  left: 0
+  position: absolute
+  top: 1.5pc
+  width: 3pc
+
+h1
+  font-weight: 100
+  font-size: 3pc
+  margin: 0 0 6pt
+
+h2
+  font-weight: 100
+  font-size: 2pc
+  line-height: 1em;
+  margin: 0 0 3pt
+
+section
+  margin: 0 0 0 1in
+
+section > section
+  margin: 2pc 0
+
+.block
+  page-break-inside: avoid
+
+.company
+  font-size: 1.2em
+
+.project
+  font-size: 1.2em
+  // font-weight: 700
+
+.position
+  font-weight: 700
+
+.time
+  color: $grey50
+  font-style: italic
+
+.skill-level
+  th
+    padding-right: 3em
+    text-align: left
+
+.no-margin
+  margin: 0

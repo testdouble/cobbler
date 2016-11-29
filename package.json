@@ -14,9 +14,10 @@
   "license": "MIT",
   "dependencies": {
     "debug": "~2.3.3",
-    "jade": "~1.11.0",
+    "jstransformer-sass": "~0.1.0",
     "minimist": "~1.2.0",
     "nightmare": "~2.8.1",
+    "pug": "~2.0.0-beta6",
     "resume-schema": "0.0.16",
     "temp": "~0.8.3"
   }
