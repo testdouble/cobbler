@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "debug": "~2.3.3",
+    "hummus": "~1.0.65",
     "jstransformer-sass": "~0.1.0",
     "minimist": "~1.2.0",
     "nightmare": "~2.8.1",
