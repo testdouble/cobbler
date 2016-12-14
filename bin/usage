@@ -1,5 +1,12 @@
 Usage: cobbler [OPTIONS]
 
+Generates Test-Double-branded résumés from JSON Resume-compatible
+JSON documents.
+
 Options:
-    -i, --input       The input JSON file to read.
-    -o, --output      The output PDF file to write.
+    -i, --input FILE      Read from this JSON document, specified as
+                          a relative path.
+    -o, --output FILE     Write to this PDF file, specified as a
+                          relative path.
+
+For more information on JSON Resume, see https://jsonresume.org.
