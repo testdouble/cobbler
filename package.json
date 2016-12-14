@@ -1,10 +1,10 @@
 {
-  "name": "dossier",
+  "name": "cobbler",
   "version": "0.1.0",
   "description": "A tool to generate résumés for Test Double agents.",
-  "main": "lib/dossier.js",
+  "main": "lib/cobbler.js",
   "bin": {
-    "dossier": "bin/dossier"
+    "cobbler": "bin/cobbler"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

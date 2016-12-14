@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-var dossier = require('../lib/dossier')
-var debug = require('debug')('dossier')
+var cobbler = require('../lib/cobbler')
+var debug = require('debug')('cobbler')
 var fs = require('fs')
 var minimist = require('minimist')
 var path = require('path')
@@ -35,13 +35,13 @@ if (process.exitCode) {
 } else {
   debug('Using intermediary HTML file: %s', tempfile)
 
-  dossier.load(path.resolve(process.cwd(), argv.input))
-    .then(data => dossier.render(
+  cobbler.load(path.resolve(process.cwd(), argv.input))
+    .then(data => cobbler.render(
       path.resolve(__dirname, '../assets/template.pug'),
       data,
       tempfile
     ))
-    .then(_ => dossier.pdf(
+    .then(_ => cobbler.pdf(
       tempfile,
       path.resolve(process.cwd(), argv.output)
     ))

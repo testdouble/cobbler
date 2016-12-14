@@ -1,4 +1,4 @@
-Usage: dossier [OPTIONS]
+Usage: cobbler [OPTIONS]
 
 Options:
     -i, --input       The input JSON file to read.
