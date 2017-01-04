@@ -22,5 +22,8 @@
     "pug": "~2.0.0-beta6",
     "resume-schema": "0.0.16",
     "temp": "~0.8.3"
+  },
+  "devDependencies": {
+    "cson": "^4.0.0"
   }
 }
