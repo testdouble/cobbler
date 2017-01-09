@@ -14,7 +14,7 @@ mixin duration(start, end)
     | #{mDuration.humanize()}
 
 mixin gig(details, short)
-  .company= details.company
+  .company= details.company || details.organization
   if details.position
     .position= details.position
   if details.positions
@@ -94,6 +94,13 @@ body
         tr.skill-level
           th= level
           td= skill.join(', ')
+
+  section.category
+    h2 Volunteering &amp; Community
+
+    each job in volunteer
+      section.project
+        +gig(job)
 
   section.category
     h2 Education
