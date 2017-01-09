@@ -13,6 +13,7 @@
   "author": "Michael Schoonmaker <michael.r.schoonmaker@gmail.com> (https://www.schoonology.com/)",
   "license": "MIT",
   "dependencies": {
+    "cson": "^4.0.0",
     "debug": "~2.3.3",
     "hummus": "~1.0.65",
     "jstransformer-sass": "~0.1.0",
@@ -22,5 +23,6 @@
     "pug": "~2.0.0-beta6",
     "resume-schema": "0.0.16",
     "temp": "~0.8.3"
-  }
+  },
+  "devDependencies": {}
 }
