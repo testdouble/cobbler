@@ -47,68 +47,75 @@ body
   .logo
     include /td-logo.svg
 
-  header.category
-    h1.name= basics.name
-    .email= basics.email
+  if basics
+    header.category
+      h1.name= basics.name
+      .email= basics.email
+      .summary!= basics.summary
 
-  section.category
-    - var employment = work.filter(job => {
-    -   return (job.keywords || []).indexOf('personal') === -1
-    - })
+  if work
+    section.category
+      - var employment = work.filter(job => {
+      -   return (job.keywords || []).indexOf('personal') === -1
+      - })
 
-    h2 Employment History
+      h2 Employment History
 
-    each job in employment
-      section.work
-        +gig(job)
+      each job in employment
+        section.work
+          +gig(job)
 
-        if job.projects
-          section.projects
-            h3 Featured Projects &amp; Roles
+          if job.projects
+            section.projects
+              h3 Featured Projects &amp; Roles
 
-            each project in job.projects
-              section.project
-                +gig(project, true)
+              each project in job.projects
+                section.project
+                  +gig(project, true)
 
-  section.category
-    - var projects = work.filter(job => {
-    -   return (job.keywords || []).indexOf('personal') !== -1
-    - })
+    section.category
+      - var projects = work.filter(job => {
+      -   return (job.keywords || []).indexOf('personal') !== -1
+      - })
 
-    h2 Personal Projects
+      if projects.length
+        h2 Personal Projects
 
-    each job in projects
-      section.project
-        +gig(job)
+        each job in projects
+          section.project
+            +gig(job)
 
-  section.category
-    - var skillsObj = skills.reduce((obj, skill) => {
-    -   obj[skill.level] = (obj[skill.level] || []).concat(skill.name);
-    -   return obj
-    - }, {})
+  if skills
+    section.category
+      - var skillsObj = skills.reduce((obj, skill) => {
+      -   obj[skill.level] = (obj[skill.level] || []).concat(skill.name);
+      -   return obj
+      - }, {})
 
-    h2 Skills
+      h2 Skills
 
-    table
-      each skill, level in skillsObj
-        tr.skill-level
-          th= level
-          td= skill.join(', ')
+      table
+        each skill, level in skillsObj
+          tr.skill-level
+            th= level
+            td= skill.join(', ')
 
-  section.category
-    h2 Volunteering &amp; Community
+  if volunteer && volunteer.length
+    section.category
+      h2 Volunteering &amp; Community
 
-    each job in volunteer
-      section.project
-        +gig(job)
+      each job in volunteer
+        section.project
+          +gig(job)
 
-  section.category
-    h2 Education
+  if education
+    section.category
+      h2 Education
 
-    each level in education
-      p.degree
-        span.field #{level.studyType} in #{level.area},
-        | &nbsp;
-        span.school #{level.institution}
-        | &nbsp;
-        span.time #{level.startDate.split('-')[0]}&hairsp;&ndash;&hairsp;#{level.endDate.split('-')[0]}
+      each level in education
+        p.degree
+          span.field #{level.studyType} in #{level.area},
+          | &nbsp;
+          span.school #{level.institution}
+          | &nbsp;
+          span.time #{level.startDate.split('-')[0]}&hairsp;&ndash;&hairsp;#{level.endDate.split('-')[0]}
