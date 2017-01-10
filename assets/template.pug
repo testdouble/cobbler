@@ -59,7 +59,16 @@ body
     header.category
       h1.name= basics.name
       a.email(href='mailto:' + basics.email)= basics.email
-      .summary!= basics.summary
+
+      if basics.profiles
+        each site in basics.profiles
+          .profile
+            = site.network
+            | :&nbsp;
+            a.email(href=site.url)= site.username
+
+      if basics.summary
+        .summary!= basics.summary
 
   if work
     section.category
