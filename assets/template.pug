@@ -32,7 +32,7 @@ mixin gig(details, short)
         else
           | Present
   if details.summary
-    p= details.summary
+    p!= details.summary
   if details.highlights
     ul.highlights
       each item in details.highlights
