@@ -1,3 +1,9 @@
+mixin link(url)
+  if url
+    | (
+    a(href=url.href)= url.host || url.href || url
+    | )
+
 mixin duration(start, end)
   - var mStart = moment(start)
   - var mEnd = moment(end)
@@ -14,7 +20,9 @@ mixin duration(start, end)
     | #{mDuration.humanize()}
 
 mixin gig(details, short)
-  .company= details.company || details.organization
+  .company
+    | #{details.company || details.organization}&nbsp;
+    +link(details.website)
   if details.position
     .position= details.position
   if details.positions
@@ -50,7 +58,7 @@ body
   if basics
     header.category
       h1.name= basics.name
-      .email= basics.email
+      a.email(href='mailto:' + basics.email)= basics.email
       .summary!= basics.summary
 
   if work
