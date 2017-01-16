@@ -36,6 +36,7 @@ if (process.exitCode) {
   debug('Using intermediary HTML file: %s', tempfile)
 
   cobbler.load(path.resolve(process.cwd(), argv.input))
+    .then(data => cobbler.preprocess(data))
     .then(data => cobbler.render(
       path.resolve(__dirname, '../assets/template.pug'),
       data,

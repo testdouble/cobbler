@@ -1,3 +1,9 @@
+mixin link(url)
+  if url
+    | (
+    a(href=url.href)= url.host || url.href || url
+    | )
+
 mixin duration(start, end)
   - var mStart = moment(start)
   - var mEnd = moment(end)
@@ -14,7 +20,9 @@ mixin duration(start, end)
     | #{mDuration.humanize()}
 
 mixin gig(details, short)
-  .company= details.company
+  .company
+    | #{details.company || details.organization}&nbsp;
+    +link(details.website)
   if details.position
     .position= details.position
   if details.positions
@@ -32,7 +40,7 @@ mixin gig(details, short)
         else
           | Present
   if details.summary
-    p= details.summary
+    p!= details.summary
   if details.highlights
     ul.highlights
       each item in details.highlights
@@ -47,61 +55,84 @@ body
   .logo
     include /td-logo.svg
 
-  header.category
-    h1.name= basics.name
-    .email= basics.email
+  if basics
+    header.category
+      h1.name= basics.name
+      a.email(href='mailto:' + basics.email)= basics.email
 
-  section.category
-    - var employment = work.filter(job => {
-    -   return (job.keywords || []).indexOf('personal') === -1
-    - })
+      if basics.profiles
+        each site in basics.profiles
+          .profile
+            = site.network
+            | :&nbsp;
+            a.email(href=site.url)= site.username
 
-    h2 Employment History
+      if basics.summary
+        .summary!= basics.summary
 
-    each job in employment
-      section.work
-        +gig(job)
+  if work
+    section.category
+      - var employment = work.filter(job => {
+      -   return (job.keywords || []).indexOf('personal') === -1
+      - })
 
-        if job.projects
-          section.projects
-            h3 Featured Projects &amp; Roles
+      h2 Employment History
 
-            each project in job.projects
-              section.project
-                +gig(project, true)
+      each job in employment
+        section.work
+          +gig(job)
 
-  section.category
-    - var projects = work.filter(job => {
-    -   return (job.keywords || []).indexOf('personal') !== -1
-    - })
+          if job.projects
+            section.projects
+              h3 Featured Projects &amp; Roles
 
-    h2 Personal Projects
+              each project in job.projects
+                section.project
+                  +gig(project, true)
 
-    each job in projects
-      section.project
-        +gig(job)
+    section.category
+      - var projects = work.filter(job => {
+      -   return (job.keywords || []).indexOf('personal') !== -1
+      - })
 
-  section.category
-    - var skillsObj = skills.reduce((obj, skill) => {
-    -   obj[skill.level] = (obj[skill.level] || []).concat(skill.name);
-    -   return obj
-    - }, {})
+      if projects.length
+        h2 Personal Projects
 
-    h2 Skills
+        each job in projects
+          section.project
+            +gig(job)
 
-    table
-      each skill, level in skillsObj
-        tr.skill-level
-          th= level
-          td= skill.join(', ')
+  if skills
+    section.category
+      - var skillsObj = skills.reduce((obj, skill) => {
+      -   obj[skill.level] = (obj[skill.level] || []).concat(skill.name);
+      -   return obj
+      - }, {})
 
-  section.category
-    h2 Education
+      h2 Skills
 
-    each level in education
-      p.degree
-        span.field #{level.studyType} in #{level.area},
-        | &nbsp;
-        span.school #{level.institution}
-        | &nbsp;
-        span.time #{level.startDate.split('-')[0]}&hairsp;&ndash;&hairsp;#{level.endDate.split('-')[0]}
+      table
+        each skill, level in skillsObj
+          tr.skill-level
+            th= level
+            td= skill.join(', ')
+
+  if volunteer && volunteer.length
+    section.category
+      h2 Volunteering &amp; Community
+
+      each job in volunteer
+        section.project
+          +gig(job)
+
+  if education
+    section.category
+      h2 Education
+
+      each level in education
+        p.degree
+          span.field #{level.studyType} in #{level.area},
+          | &nbsp;
+          span.school #{level.institution}
+          | &nbsp;
+          span.time #{level.startDate.split('-')[0]}&hairsp;&ndash;&hairsp;#{level.endDate.split('-')[0]}
