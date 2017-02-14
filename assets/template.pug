@@ -136,3 +136,12 @@ body
           span.school #{level.institution}
           | &nbsp;
           span.time #{level.startDate.split('-')[0]}&hairsp;&ndash;&hairsp;#{level.endDate.split('-')[0]}
+
+  if references && references.length
+    section.category
+      h2 References
+
+      each ref in references
+        blockquote #{ref.reference}
+        b.right - #{ref.name}
+        | &nbsp;
