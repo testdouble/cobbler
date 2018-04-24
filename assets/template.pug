@@ -136,3 +136,28 @@ body
           span.school #{level.institution}
           | &nbsp;
           span.time #{level.startDate.split('-')[0]}&hairsp;&ndash;&hairsp;#{level.endDate.split('-')[0]}
+
+  if publications && publications.length
+    section.category
+      - var talksObj = publications.reduce((obj, publication) => {
+      -   obj[publication.name] = (obj[publication.name] || []).concat(publication)
+      -   return obj
+      - }, {})
+
+      h2 Conference talks
+
+      ul.talks
+        each presentations, talk in talksObj
+          li.talk
+            .talk-name #{talk}
+            ul.presentations
+              each presentation in presentations
+                li.presentation
+                  span.presentation-name
+                    | #{presentation.publisher},&nbsp;
+                  span.presentation-date
+                    | #{presentation.releaseDate}
+                  if presentation.website
+                    span.presentation-video
+                      | &nbsp;
+                      +link(presentation.website)
