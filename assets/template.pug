@@ -58,14 +58,17 @@ body
   if basics
     header.category
       h1.name= basics.name
-      a.email(href='mailto:' + basics.email)= basics.email
+      a.profile-link(href='mailto:' + basics.email)= basics.email
 
       if basics.profiles
         each site in basics.profiles
           .profile
             = site.network
             | :&nbsp;
-            a.email(href=site.url)= site.username
+            if site.url
+              a.profile-link(href=site.url)= site.username
+            else
+              a.profile-value= site.username
 
       if basics.summary
         .summary!= basics.summary
