@@ -20,31 +20,32 @@ mixin duration(start, end)
     | #{mDuration.humanize()}
 
 mixin gig(details, short)
-  .company
-    | #{details.company || details.organization}&nbsp;
-    +link(details.website)
-  if details.position
-    .position= details.position
-  if details.positions
-    each position in details.positions
-      .position= position
-  if details.startDate
-    .time
-      if short
-        +duration(details.startDate, details.endDate)
-      else
-        =details.startDate.split('-')[0]
-        | &hairsp;&ndash;&hairsp;
-        if details.endDate
-          =details.endDate.split('-')[0]
+  .gig
+    .company
+      | #{details.company || details.organization}&nbsp;
+      +link(details.website)
+    if details.position
+      .position= details.position
+    if details.positions
+      each position in details.positions
+        .position= position
+    if details.startDate
+      .time
+        if short
+          +duration(details.startDate, details.endDate)
         else
-          | Present
-  if details.summary
-    p!= details.summary
-  if details.highlights
-    ul.highlights
-      each item in details.highlights
-        li= item
+          =details.startDate.split('-')[0]
+          | &hairsp;&ndash;&hairsp;
+          if details.endDate
+            =details.endDate.split('-')[0]
+          else
+            | Present
+    if details.summary
+      p!= details.summary
+    if details.highlights
+      ul.highlights
+        each item in details.highlights
+          li= item
 
 doctype html
 head
