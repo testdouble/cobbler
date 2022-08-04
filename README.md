@@ -23,7 +23,7 @@ Generates Test-Double-branded résumés from [JSON-Resume-compatible][json-resum
 - [Pug.js][pug], used for template rendering.
 - [SASS][sass], used for styling.
 - [Nightmare][nightmare], used for PDF generation.
-- [Hummus][hummus], used for PDF annoatation.
+- [Muhammara][muhammara], used for PDF annoatation.
 
 ## What's with the name?
 
@@ -35,4 +35,4 @@ We love ourselves some spycraft (and/or spy myth) at Test Double, and a "cobbler
 [pug]: https://pugjs.org/api/getting-started.html
 [sass]: https://www.npmjs.com/package/node-sass
 [nightmare]: http://www.nightmarejs.org/
-[hummus]: https://www.npmjs.com/package/hummus
+[muhammara]: https://www.npmjs.com/package/muhammara
