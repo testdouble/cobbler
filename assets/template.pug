@@ -4,10 +4,9 @@ mixin link(url)
     a(href=url.href)= url.host || url.href || url
     | )
 
-mixin duration(start, end)
-  - var mStart = moment(start)
-  - var mEnd = moment(end)
-  - var mDuration = moment.duration(mEnd.diff(mStart))
+
+mixin shortTime(details)
+  - var mDuration = timeHelpers.calculateDuration(details)
 
   if mDuration.asYears() >= 2
     if mDuration.months() < 2 || mDuration.months() > 10
@@ -18,6 +17,15 @@ mixin duration(start, end)
     | #{Math.round(mDuration.asMonths())} months
   else
     | #{mDuration.humanize()}
+
+mixin longTime(startDate, endDate)
+  =startDate.split('-')[0]
+  | &hairsp;&ndash;&hairsp;
+  if endDate
+    =endDate.split('-')[0]
+  else
+    | Present
+    
 
 mixin gig(details, short)
   .company
@@ -31,14 +39,19 @@ mixin gig(details, short)
   if details.startDate
     .time
       if short
-        +duration(details.startDate, details.endDate)
+        +shortTime(details)
       else
-        =details.startDate.split('-')[0]
-        | &hairsp;&ndash;&hairsp;
-        if details.endDate
-          =details.endDate.split('-')[0]
-        else
-          | Present
+        +longTime(details.startDate, details.endDate)
+  if details.dates && !details.startDate
+    .time
+      if short
+        +shortTime(details)
+      else
+        each entry, i in details.dates
+          +longTime(entry.startDate, entry.endDate)
+          if i != details.dates.length - 1
+            | and
+
   if details.summary
     p!= details.summary
   if details.highlights
